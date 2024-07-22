@@ -78,13 +78,12 @@ int main(int argc, char** argv)
                         bracket_not_matched++;
                         while (bracket_not_matched)
                         {
-                            fseek(file, -2, SEEK_CUR);
-                            character = fgetc(file);
-                            if (character == EOF)
+                            if (fseek(file, -2, SEEK_CUR))
                             {
                                 fprintf(stderr, "Error: did not find matching '['...");
                                 return EXIT_FAILURE;
                             }
+                            character = fgetc(file);
                             bracket_not_matched -= character == '[';
                             bracket_not_matched += character == ']';
                         }
